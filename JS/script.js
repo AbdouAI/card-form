@@ -26,9 +26,8 @@ form.addEventListener("submit", (e)=>{
     e.preventDefault();
     cardDetails();
     if (checkInput()){
-        loadCpage();
+        loadCpage();  
     }
-
 });
 
 function checkInput(){
@@ -137,7 +136,7 @@ function checkInput(){
         cvcER.innerText="Wrong format";
         IbCardCvc.className="input-error"
     }
-    else if(number.includes(".")){
+    else if(bCardCvc.includes(".")){
         cvcER.innerText="Wrong format, follow the example";
         IbCardCvc.className="input-error";
     }
@@ -160,18 +159,35 @@ function loadCpage(){
 }
 
 function cardDetails(){
-    CbCardCvc.textContent=(IbCardCvc.value)
     let number=Inumber.value.trim().replace(/ /g,"");
     let shownNumber="";
-    for(let i=0;i<number.length;i++){
+    let count=0;
+    let numLen=0;
+    if(number.length<=16){
+        numLen=number.length
+    }
+    else{
+        numLen=16
+    }
+    for(let i=0;i<numLen;i++){
         shownNumber+=number[i];
-        if((i+1)%4==0){
+        count++
+        if((count)%4==0){
             shownNumber+=" ";
         }
+    }    
+    for(let j=0;j<16-number.length;j++){
+        shownNumber+="-"
+        count++
+        if((count)%4==0){
+            shownNumber+=" ";
+        }     
     }
+    
     Cnumber.textContent=(shownNumber)
     Cname.textContent=(Iname.value)
-    Cdate.textContent=(`${Imonth.value}/${Iyear.value}`)
+    Cdate.textContent=(`${Imonth.value.slice(0,2)}/${Iyear.value.slice(0,2)}`)
+    CbCardCvc.textContent=(IbCardCvc.value.slice(0,3))
 }
 
 
