@@ -23,10 +23,12 @@ const Cdate=document.getElementById("exp-date");
 
 
 form.addEventListener("submit", (e)=>{
-    e.preventDefault();
     cardDetails();
-    if (checkInput()){
-        loadCpage();  
+    if (!checkInput()){
+        e.preventDefault();
+    }
+    else{
+        loadCpage();
     }
 });
 
@@ -183,7 +185,7 @@ function cardDetails(){
             shownNumber+=" ";
         }     
     }
-    
+
     Cnumber.textContent=(shownNumber)
     Cname.textContent=(Iname.value)
     Cdate.textContent=(`${Imonth.value.slice(0,2)}/${Iyear.value.slice(0,2)}`)
