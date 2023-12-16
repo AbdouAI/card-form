@@ -23,7 +23,6 @@ const Cdate=document.getElementById("exp-date");
 
 
 form.addEventListener("submit", (e)=>{
-    cardDetails();
     if (!checkInput()){
         e.preventDefault();
     }
@@ -31,6 +30,12 @@ form.addEventListener("submit", (e)=>{
         loadCpage();
     }
 });
+
+for(el of document.querySelectorAll("input")){
+    el.onkeyup=()=>{
+        cardDetails()
+    }
+}
 
 function checkInput(){
     let dateCor=0;
@@ -167,13 +172,20 @@ function cardDetails(){
     let numLen=0;
     if(number.length<=16){
         numLen=number.length
+        Cnumber.style.color="white"
+
     }
     else{
-        numLen=16
+        shownNumber="MAX 16 NUMBERS"
     }
     for(let i=0;i<numLen;i++){
-        shownNumber+=number[i];
-        count++
+        if(isNaN(number[i])){
+            shownNumber+="!";
+            count++
+        }else{
+            shownNumber+=number[i];
+            count++
+        }
         if((count)%4==0){
             shownNumber+=" ";
         }
